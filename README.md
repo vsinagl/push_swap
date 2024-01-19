@@ -30,41 +30,37 @@ the calls of operation are:
 - `sb`: swap stack b
 
 ## Rotating
-In rotation operation, we put the first item to the bottom or the bottom item to the top. The first mentioned is called "*rotation* (putting top item on stack to bottom). The second operation (putting the item from bottom to top) is called *reverse ration*.
-We can *rotate* or *reverse rotate* the stack A or stack B
-example:
-stack B:
-	4
-	1
-	2
-	3
-`rB`
-stack B after rotation:
-	1
-	2
-	3
-	4
-the calls of operations are:
-- `rA`, `rB`: rotate stack A or B
-- `rrA`, `rrB`: reverse rotate stack A or B
-
+In rotation operation, we put the first item to the bottom or the bottom item to the top. The first mentioned is called "*rotation* (putting top item on stack to bottom). The second operation (putting the item from bottom to top) is called *reverse ration*.  
+We can *rotate* or *reverse rotate* the stack A or stack B  
+Example:  
+stack B:  
+	4  
+	1  
+	2  
+	3  
+`rB`  
+stack B after rotation:  
+	1  
+	2  
+	3  
+	4  
+the calls of operations are:  
+- `rA`, `rB`: rotate stack A or B  
+- `rrA`, `rrB`: reverse rotate stack A or B  
+  
 ## Pushing
-Pushing push the top element from stack to destination stack.
-The letter after 
-for example:
-stack A:	stack B:
-	2
-	3
-	10
-`pB`
-stack A:	stack B:
-	3	2
-	10
-
-the calls of operations are:
-- `pa`: push stack from B to A
-- `pb`: push stack from A to B
-
-
-
+Pushing push the top element from stack to destination stack.  
+for example:  
+stack A:	stack B:  
+	2  
+	3  
+	10  
+`pB`  
+stack A:	stack B:  
+	3	2  
+	10  
+  
+the calls of operations are:  
+- `pa`: push stack from B to A  
+- `pb`: push stack from A to B  
 
