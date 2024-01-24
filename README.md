@@ -24,14 +24,17 @@ when we use `sa` function, we get:
 	4
 	3
 	1
+  
 we can use the swap function on stack A or stack B
 the calls of operation are:
-- `sa`: swap stack a
-- `sb`: swap stack b
+- `sa`: swap stack A
+- `sb`: swap stack B
+- `ss`: swap both stack A and B 
 
 ## Rotating
 In rotation operation, we put the first item to the bottom or the bottom item to the top. The first mentioned is called "*rotation* (putting top item on stack to bottom). The second operation (putting the item from bottom to top) is called *reverse ration*.  
 We can *rotate* or *reverse rotate* the stack A or stack B  
+  
 Example:  
 stack B:  
 	4  
@@ -47,6 +50,7 @@ stack B after rotation:
 the calls of operations are:  
 - `rA`, `rB`: rotate stack A or B  
 - `rrA`, `rrB`: reverse rotate stack A or B  
+- `rrr` : reverse rotate both A and B at same time
   
 ## Pushing
 Pushing push the top element from stack to destination stack.  
@@ -63,4 +67,3 @@ stack A:	stack B:
 the calls of operations are:  
 - `pa`: push stack from B to A  
 - `pb`: push stack from A to B  
-

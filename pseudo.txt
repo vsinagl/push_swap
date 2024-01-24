@@ -1,0 +1,8 @@
+pseudo code for push swap project, written in markdown
+
+# OPERATIONS
+  
+## Operations input
+- operations will recieve pointer for array and pointer for head and size of the array
+- **head** is size_t variable that is representing the actual top of stack. So for example in pushing operation, we normally add element to the bottom of head, and move head to the last element. Because the length of the array is known, when we will try to reach n+1 element index that will overflow the actual size of array, we will start counting from begging. Like that we can point to the second element to avoid array overflow errors.
+- 
