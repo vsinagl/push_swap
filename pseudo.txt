@@ -6,3 +6,103 @@ pseudo code for push swap project, written in markdown
 - operations will recieve pointer for array and pointer for head and size of the array
 - **head** is size_t variable that is representing the actual top of stack. So for example in pushing operation, we normally add element to the bottom of head, and move head to the last element. Because the length of the array is known, when we will try to reach n+1 element index that will overflow the actual size of array, we will start counting from begging. Like that we can point to the second element to avoid array overflow errors.
 - 
+
+
+## Sort with pivot:
+- 1. sort the input array, chose pivot numberse. 
+	- pivot numbers are quarters of sorted array (in array of 100 elements it will be index 25, 50,75)
+	- numbers will be pushed from A to B in four groups by following condition . 
+		1. number < arr[25]
+		2. number < arr[50]
+		3. number < arr[75]
+		4. number < arr[100] (this is automatically achieved, we use injection sorting to stack B in the last step
+
+last 4. group will use injection sort to sort this numbers from A to B)
+--> budeme potrebovat injection_sort function!
+
+
+
+steps:
+:1	sort array with merge sort function
+:2  chose pivots --> function for sorting and chossing pivots
+	- input parametrs(int number of divisions, array)
+	- return (int *)
+
+:3 pivot_sort() 
+	- function will take number of divisons and do the sorting
+	- last division will use injection
+	- injection sort on stackB to A
+
+
+### *INJECTION SORT*
+- overeni pro algoritmus pro injection sort:
+
+array A = {1, 6, -10, 8, 4}
+array B = {}
+--- 1. ---
+arr_start = 0
+len = 0;
+i = NULL;
+temp = NULL;
+
+i = 0
+(from->len = A-> len) = 5 != 0 => ok!
+	1. i = 0;
+	2. (len = 0) == 0 => 1 ok!
+		1.push(from, to)
+		2. len==
+
+--- 2. ---
+array A = {6, -10, 8, 4}
+array B = {1, }
+arr_start = 0
+len = 1;
+i = 0;
+temp = NULL;
+
+	(from->len = A-> len) = 5 != 0 => ok!
+	1. i = 0;
+	2. (len = 1) == 0 => 0 ko!
+	3. if (from->head = 6) > (get_stack_value(B, i(0)) = to->head->value = 1) ==> 1 ok!
+		temp = arr_start - i = 0 - 0 = 0
+		if (temp <= 0; 0 <= 0) ==> 1 ok!)
+			while (temp < 0; 0 < 0) ==> 0 ko!
+		if (temp > 0) ==> ko!
+		push(from,to)
+		len++ => len = 2
+
+
+--- 2. ---
+array A = {-10, 8, 4}
+array B = {6, 1}
+arr_start = 0
+len = 2;
+i = 0;
+temp = 0;
+	
+	1. (len = 1) == 0 => 0 ko!
+	2. if (from->head = -10) > (get_stack_value(B, arr_start + i = 0 + 0 = 0) = to->head->value = 6) ==> 0 
+	3. i = 1;
+
+	1. len == 0 KO!
+	2. if (-10 > gsv(B, 0 + 1) = 1) ||  1 > 2 ==> 0 ko!
+	3. i = 2;
+
+	1. len == 0 KO!
+	2. if (-10 > gsv(B, 0 + 2) = 6) ||  2 => 2 ==> 1 ko!
+		temp = arr_start - i = 0 - 2 = -2
+		if (temp < 0) ==> ok!
+			rotate()  
+			array B = {1, 6}
+			temp-- = -1
+		if (temp < 0) ==> ok!
+
+===> algo spatny, rozdelit na prehlednejsi casti
+
+1. loop pro vsechny prvky ve stacku. 
+	2. porovej prvek, urci jeho insert index (tzn. relativni insert index oproti aktualnimu stacku)
+	3. urci nejkratsi castu (muzeme traversovat jako rotation(+) a reverse_rotation(-)
+	4. proved operace a insert
+		- tady bude potrebovat poznamenat index aktualni hlavy (headu)
+		
+		
