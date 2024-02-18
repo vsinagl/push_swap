@@ -66,14 +66,14 @@ int	rotation_distance(int stacklen, int head, int index, int len)
 		return (-1 * rr_distance);
 }
 
-int	rotation_sequence(t_stack *to, int movedist, int head)
+void	rotation_sequence(t_stack *to, int movedist)
 {
 	if(movedist > 0)
 	{
 		while(movedist-- > 0)
 		{
 			rotate(1, to);
-			head++;
+			to->head_i++;
 		}
 	}
 	else if (movedist < 0)
@@ -81,55 +81,48 @@ int	rotation_sequence(t_stack *to, int movedist, int head)
 		while(movedist++ < 0)
 		{
 			rev_rotate(1, to);
-			head--;
+			to->head_i--;
 		}
-		head--;
 	}
-	return (head);
+	if (to->head_i <= 0)
+		to->head_i--;
 }
 
-int	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver, int head)
-{
-	int *movedist1;
-	int *movedist2;
 
-	//rewrite the solver structure instead of arrays there wil be just integers movedist1 and movedist2?
-	movedist1 = &solver->matrix[0][solver->bi_score];
-	movedist2 = &solver->matrix[1][solver->bi_score];
-	if (*movedist1 > 0)
+void	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver)
+{
+	if (solver->matrix[0][solver->bi_score] > 0)
 	{
-		while (*movedist1-- > 0)
+		while (solver->matrix[0][solver->bi_score]-- > 0)
 		{
-			if (*movedist2 > 0)
+			if (solver->matrix[1][solver->bi_score] > 0)
 			{
-				while (*movedist2-- > 0)
-				{
-					rotate(2, to, from);
-					head++;
-				}
+				solver->matrix[1][solver->bi_score]--;
+				rotate(2, to, from);
+				to->head_i++;
 			}
 			else
-				rotate(1, to);
+			{
+				rotate(1, from);
+			}
 		}
 	}
-	else if (*movedist1 < 0)
+	else if (solver->matrix[0][solver->bi_score] < 0)
 	{
-		while (*movedist1++ < 0)
+		while (solver->matrix[0][solver->bi_score]++ < 0)
 		{
-			if (*movedist2 < 0)
+			if (solver->matrix[1][solver->bi_score] < 0)
 			{
-				while (*movedist2++ < 0)
-				{
-					rev_rotate(2, to, from);
-					head--;
-				}
+				solver->matrix[1][solver->bi_score]++; 
+				rev_rotate(2, to, from);
+				to->head_i--;
 			}
 			else
-				rev_rotate(1, to);
-			// head = head - 1; ANO nebo NE?
+			{
+				rev_rotate(1, from);
+			}
 		}
 	}
-	return (head);
 }
 	
 

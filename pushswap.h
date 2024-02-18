@@ -34,6 +34,7 @@ typedef struct t_node
 typedef struct t_stack
 {
 	t_node	*head;
+	int		head_i;
 	size_t	len;
 	char	name;
 }	t_stack;
@@ -51,8 +52,8 @@ void	swap(int numstack, ...);
 void	sort(int *input, size_t len);
 void	mini_sort(t_stack	*stack);
 int		get_stack_value(t_stack *stack, int index);
-int		rotation_sequence(t_stack *to, int movedist, int head);
-int		rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver, int head);
+void	rotation_sequence(t_stack *to, int movedist);
+void	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver);
 int		rotation_distance(int stacklen, int head, int index, int len);
 int		get_index(int from_head, t_stack *to, int head);
 t_solver	*create_solver(t_stack *from, t_stack *to, int head_from, int head_to);

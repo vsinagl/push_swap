@@ -49,74 +49,78 @@ void	mini_sort(t_stack *stack)
 
 void	injection_sort(t_stack *from, t_stack *to)
 {
-	int		head;
 	int		len;
 	int		index;
 	int		movedist;
 
-	head = 0;
 	len = 0;
 	while(from->len != 0)
 	{
 		index = 0;
 		if (to->len == 0)
 			index = 1;
-		while (index < len && (from->head->value < get_stack_value(to, index - head)))
+		while (index < len && (from->head->value < get_stack_value(to, index - to->head_i)))
 			index++;
-		movedist = rotation_distance(to->len, head, index, len);
-		rotation_sequence(to, movedist, head);	
+		movedist = rotation_distance(to->len, to->head_i, index, len);
+		rotation_sequence(to, movedist);	
 		push(from, to);
-		head = index;
+		to->head_i = index;
 		len++;
 	}
-	movedist = rotation_distance(to->len, head, 0, len);
-	head = rotation_sequence(to, movedist, head);	
+	movedist = rotation_distance(to->len, to->head_i, 0, len);
+	rotation_sequence(to, movedist);	
 }
 
 //ppo kazdem pushi se bude muset prepocitat hodnoty pro matrix, le to je logicke, musi byt pro to separatni funkce
 //matrix si viiniculaziuje na zacatku a jeji velikost bude takova, jako je velikost prvni arraye (respektive celkove array, ta uz se potom nebude menit
 
-void	injection_sort2(t_stack *from, t_stack *to, int len)
+void	recalculate_head(t_stack *stack)
 {
-	int			head_from;
-	int			head_to;
+	int sign = 1;
+	if (stack->head_i == 0)
+		return ;
+	if (stack->head_i < 0)
+		sign = 0;
+	int res = ABS(stack->len - ABS(stack->head_i));
+	if (res < ABS(stack->head_i))
+	{
+		if (sign == 1)
+			stack->head_i = -res;
+		else
+			stack->head_i = res;
+	}
+}
+
+void	injection_sort2(t_stack *from, t_stack *to, int len, int min)
+{
 	t_solver	*solver;
 	int			movedist;
 
-	head_from = 0;
-	head_to = 0;
 	while(from->len != 0)
 	{
-		solver = create_solver(from, to, head_from, head_to);
-	//	ft_printf("solver results: bi_score: %i\n", solver->bi_score);
-	//	ft_printf("solver movedist1: %i", solver->matrix[0][solver->bi_score]);
-	//	ft_printf("\tsolver movedist2: %i\n", solver->matrix[1][solver->bi_score]);
-	//	ft_printf("movements and results of movements\n\n");
-	for (int h = 0; h < solver->matrix_len; h++)
-	{
-		ft_printf("matrix[0][%i]: %i\n matrix[1][%i]: %i\n, matrix[2][%i]: %i\n",h, solver->matrix[0][h],h, solver->matrix[1][h],h, solver->matrix[2][h]);
-			
-	}
-		ft_printf("movements:\n");
-		head_from = rotation_sequence_two(from, to, solver, head_from);
-//		if (head != solver->bi_score)
-//			ft_printf("head != bi_score (%i != %i)\n",head, solver->bi_score);
-	//	ft_printf("zbyvajici movedist1: %i", solver->matrix[0][solver->bi_score]);
-	//	ft_printf("\tzbyvajici movedist2: %i\n", solver->matrix[1][solver->bi_score]);
-		head_to = rotation_sequence(to, solver->matrix[1][solver->bi_score], head_to);
-		if (get_stack_value(from,0) > get_stack_value(to, head_to))
-			head_to--;
+		//ft_printf("headache: headA = %i, headB = %i\n",from->head_i, to->head_i);
+		solver = create_solver(from, to, from->head_i, to->head_i);
+		rotation_sequence_two(to, from, solver);
+		rotation_sequence(to, solver->matrix[1][solver->bi_score]);
+		if (from->head->value <= min)
+		{
+			min = from->head->value;
+			ft_printf("min, neponizuji !\n");
+			to->head_i++;
+		}
 		push(from, to);
+		recalculate_head(to);
+		/*
 		print_stack(from);
 		ft_printf("and stack B: ");
 		print_stack(to);
-		ft_printf("headache: headA = %i, headB = %i\n",head_from, head_to);
-
+		ft_printf("headache: headA = %i, headB = %i\n",from->head->value, to->head_i);
 		ft_printf("\n");
+		*/
 	}
 	ft_printf("\nROLL BACK !!");
-	movedist = rotation_distance(to->len, head_to, 0, len);
-	rotation_sequence(to, movedist, head_to);	
+	movedist = rotation_distance(to->len, to->head_i, 0, len);
+	rotation_sequence(to, movedist);	
 }
 
 //void	sort(int *input, size_t len)
@@ -151,7 +155,7 @@ void	sort(int *input, size_t len)
 	print_stack(stackB);
 	ft_printf("\n"); 
 
-	injection_sort2(stackA, stackB, 0);
+	injection_sort2(stackA, stackB, 0, 1);
 	ft_printf("stackA:\n");
 	print_stack(stackA);
 	ft_printf("stackB:\n");

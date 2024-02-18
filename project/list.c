@@ -23,6 +23,7 @@ t_stack	*create_stack(t_node *head, size_t len, char name)
 	stack->head = head;
 	stack->len = len;
 	stack->name = name;
+	stack->head_i = 0;
 	return (stack);
 }
 
