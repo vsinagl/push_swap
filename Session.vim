@@ -13,25 +13,31 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +120 project/main.c
-badd +100 project/sort.c
-badd +40 project/utils2.c
-badd +61 project/utils1.c
-badd +53 pushswap.h
-badd +79 project/ops1.c
-badd +0 term://~/Code/42/push_swap//8007:/bin/bash
+badd +123 project/main.c
+badd +67 project/sort.c
+badd +53 project/utils2.c
+badd +101 project/utils1.c
+badd +13 pushswap.h
+badd +15 project/ops1.c
+badd +2 ~/Code/42/push_swap/.gitignore
+badd +25 ~/Code/42/push_swap/project/list.c
+badd +0 sort_test
+badd +11 injection2_test.sh
 argglobal
 %argdel
 $argadd project/main.c
 tabnew +setlocal\ bufhidden=wipe
 tabrewind
-edit project/utils1.c
+edit injection2_test.sh
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
-1wincmd h
+wincmd _ | wincmd |
+vsplit
+2wincmd h
+wincmd w
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -42,10 +48,11 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 105 + 105) / 211)
-exe 'vert 2resize ' . ((&columns * 105 + 105) / 211)
+exe 'vert 1resize ' . ((&columns * 93 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 67 + 81) / 162)
+exe 'vert 3resize ' . ((&columns * 0 + 81) / 162)
 argglobal
-balt pushswap.h
+balt project/utils1.c
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -56,17 +63,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 91 - ((23 * winheight(0) + 23) / 46)
+let s:l = 11 - ((10 * winheight(0) + 31) / 63)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 91
-normal! 015|
+keepjumps 11
+normal! 021|
 wincmd w
 argglobal
-if bufexists(fnamemodify("project/utils2.c", ":p")) | buffer project/utils2.c | else | edit project/utils2.c | endif
+if bufexists(fnamemodify("project/sort.c", ":p")) | buffer project/sort.c | else | edit project/sort.c | endif
 if &buftype ==# 'terminal'
-  silent file project/utils2.c
+  silent file project/sort.c
 endif
 balt project/utils1.c
 setlocal fdm=manual
@@ -79,40 +86,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 44 - ((25 * winheight(0) + 23) / 46)
+let s:l = 53 - ((13 * winheight(0) + 31) / 63)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 44
-normal! 041|
+keepjumps 53
+normal! 012|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 105 + 105) / 211)
-exe 'vert 2resize ' . ((&columns * 105 + 105) / 211)
-tabnext
-edit project/sort.c
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe 'vert 1resize ' . ((&columns * 105 + 105) / 211)
-exe 'vert 2resize ' . ((&columns * 105 + 105) / 211)
 argglobal
-if bufexists(fnamemodify("term://~/Code/42/push_swap//8007:/bin/bash", ":p")) | buffer term://~/Code/42/push_swap//8007:/bin/bash | else | edit term://~/Code/42/push_swap//8007:/bin/bash | endif
+if bufexists(fnamemodify("project/utils1.c", ":p")) | buffer project/utils1.c | else | edit project/utils1.c | endif
 if &buftype ==# 'terminal'
-  silent file term://~/Code/42/push_swap//8007:/bin/bash
+  silent file project/utils1.c
 endif
+balt project/utils2.c
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -121,13 +107,20 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1229 - ((9 * winheight(0) + 23) / 46)
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 57 - ((31 * winheight(0) + 31) / 63)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1229
-normal! 039|
+keepjumps 57
+normal! 0
 wincmd w
+exe 'vert 1resize ' . ((&columns * 93 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 67 + 81) / 162)
+exe 'vert 3resize ' . ((&columns * 0 + 81) / 162)
+tabnext
+edit project/sort.c
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -139,15 +132,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 107 - ((28 * winheight(0) + 23) / 46)
+let s:l = 104 - ((37 * winheight(0) + 31) / 63)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 107
-normal! 025|
-wincmd w
-exe 'vert 1resize ' . ((&columns * 105 + 105) / 211)
-exe 'vert 2resize ' . ((&columns * 105 + 105) / 211)
+keepjumps 104
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -155,8 +145,6 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
-let &winminheight = s:save_winminheight
-let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

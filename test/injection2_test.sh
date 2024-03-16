@@ -7,9 +7,9 @@ generate_random_number() {
 
 # Generate 100 random numbers and store them in an array
 random_numbers=()
-for ((i = 0; i < 1000; i++)); do
+for ((i = 0; i < 5; i++)); do
   random_numbers+=($(generate_random_number))
 done
 
 # Call the sort binary with the generated numbers as parameters
-./sort_test "${random_numbers[@]}"
+~/Code/42/push_swap/sort_test "${random_numbers[@]}"

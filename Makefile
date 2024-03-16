@@ -13,8 +13,10 @@ TST:=	project/ops1.c\
 		project/list.c\
 		project/main.c\
 		project/sort.c\
+		project/sort2.c\
 		project/utils1.c\
 		project/utils2.c\
+		project/utils3.c\
 		test/utils_test.c\
 
 TST_O:= $(TST:.c=.o)

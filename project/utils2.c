@@ -1,5 +1,44 @@
 #include "../pushswap.h"
 
+int	get_stack_value(t_stack *stack, int index)
+{
+	t_node	*iternode;
+	
+	iternode = stack->head;
+	if (index <= 0)
+	{
+		while (index < 0)
+		{
+			iternode = iternode->prev;
+			index++;
+		}
+		return(iternode->value);
+	}
+	else
+	{
+		while (index > 0)
+		{
+			iternode = iternode->next;
+			index--;
+		}
+		return(iternode->value);
+	}
+}
+
+int	get_index(int from_head, t_stack *to, int head)
+{
+	int	index;
+	int	movedist;
+
+	index = 0;
+	if ((int)(to->len) == 0)
+		index = 1;
+	while (index < (int)(to->len) && (from_head > get_stack_value(to, index - head)))
+		index++;
+	movedist = rotation_distance(to->len, head, index, (int)(to->len));
+	return(movedist);
+}
+
 void	free_solver(t_solver *solver)
 {
 	free(solver->matrix[0]);
@@ -51,10 +90,6 @@ t_solver	*create_solver(t_stack *from, t_stack *to, int head_from, int head_to)
 		}
 		i++;
 	}
-//	for (int h = 0; h <= solver->matrix_len; h++)
-//	{
-//		ft_printf("matrix[0][%i]: %i\n matrix[1][%i]: %i, matrix[2][%i]: %i\n",h, solver->matrix[0][h],h, solver->matrix[1][h],h, solver->matrix[2][h]);
-//	}
 	return(solver);
 }
 	

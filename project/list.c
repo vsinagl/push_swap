@@ -20,7 +20,8 @@ t_stack	*create_stack(t_node *head, size_t len, char name)
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (stack == NULL)
 		return (NULL);
-	stack->head = head;
+	if (head != NULL)
+		stack->head = head;
 	stack->len = len;
 	stack->name = name;
 	stack->head_i = 0;
@@ -35,7 +36,10 @@ t_stack	*stack_init(int *arr, size_t len, char name)
 	t_stack	*stack;
 
 	if (arr == NULL || len == 0)
-		return (NULL);
+	{
+		stack = create_stack(NULL, len, name);	
+		return(stack);	
+	}
 	i = 0;
 	curr = create_node(arr[i], NULL, NULL);
 	stack = create_stack(curr, len, name);

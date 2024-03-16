@@ -1,45 +1,5 @@
 #include "../pushswap.h"
 
-
-int	get_stack_value(t_stack *stack, int index)
-{
-	t_node	*iternode;
-	
-	iternode = stack->head;
-	if (index <= 0)
-	{
-		while (index < 0)
-		{
-			iternode = iternode->prev;
-			index++;
-		}
-		return(iternode->value);
-	}
-	else
-	{
-		while (index > 0)
-		{
-			iternode = iternode->next;
-			index--;
-		}
-		return(iternode->value);
-	}
-}
-
-int	get_index(int from_head, t_stack *to, int head)
-{
-	int	index;
-	int	movedist;
-
-	index = 0;
-	if ((int)(to->len) == 0)
-		index = 1;
-	while (index < (int)(to->len) && (from_head > get_stack_value(to, index - head)))
-		index++;
-	movedist = rotation_distance(to->len, head, index, (int)(to->len));
-	return(movedist);
-}
-
 int	rotation_distance(int stacklen, int head, int index, int len)
 {
 	int		rr_distance;
@@ -88,7 +48,50 @@ void	rotation_sequence(t_stack *to, int movedist)
 		to->head_i--;
 }
 
+void	do_rotations(t_stack *to, t_stack *from, t_solver *solver)
+{
+	while (solver->matrix[0][solver->bi_score]-- > 0)
+	{
+		if (solver->matrix[1][solver->bi_score] > 0)
+		{
+			solver->matrix[1][solver->bi_score]--;
+			rotate(2, to, from);
+			to->head_i++;
+		}
+		else
+		{
+			rotate(1, from);
+		}
+	}
+}
 
+void	do_rev_rotations(t_stack *to, t_stack *from, t_solver *solver)
+{
+	while (solver->matrix[0][solver->bi_score]++ < 0)
+	{
+		if (solver->matrix[1][solver->bi_score] < 0)
+		{
+			solver->matrix[1][solver->bi_score]++; 
+			rev_rotate(2, to, from);
+			to->head_i--;
+		}
+		else
+		{
+			rev_rotate(1, from);
+		}
+	}
+}
+
+void	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver)
+{
+	if (solver->matrix[0][solver->bi_score] > 0)
+		do_rotations(to, from, solver);
+	else if (solver->matrix[0][solver->bi_score] < 0)
+		do_rev_rotations(to, from, solver);
+}
+
+
+/*
 void	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver)
 {
 	if (solver->matrix[0][solver->bi_score] > 0)
@@ -125,8 +128,4 @@ void	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver)
 	}
 }
 	
-
-
-
-
-
+*/
