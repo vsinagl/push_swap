@@ -46,7 +46,6 @@ void	mini_sort(t_stack *stack)
 	free(arr);
 }
 
-
 void	injection_sort(t_stack *from, t_stack *to)
 {
 	int		len;

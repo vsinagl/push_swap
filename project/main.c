@@ -120,7 +120,7 @@ int	main(int argc, char *argv[])
 		ft_printf("Error\n");
 		return (1);
 	}
-	sort(input, (argc - 1));
+	sort_just_selective(input, (argc - 1));
 	return(0);
 }
 

@@ -65,10 +65,12 @@ void		rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver);
 int			rotation_distance(int stacklen, int head, int index, int len);
 void		injection_sort(t_stack *from, t_stack *to);
 void		injection_sort2(t_stack *from, t_stack *to, int len, int min);
+void		sort_just_selective(int *input, size_t len);
 int			get_index(int from_head, t_stack *to, int head);
 t_solver	*create_solver(t_stack *from, t_stack *to, int head_from, int head_to);
 void		free_solver(t_solver *solver);
 int			*mergesort(int* arr, int len);
 int			*int_copy(int *arr, int len);
+void		push_all(t_stack *from, t_stack *to);
 
 #endif

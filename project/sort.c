@@ -1,6 +1,60 @@
 #include "../pushswap.h"
 
+void	push_all(t_stack *from, t_stack *to)
+{
+	while(from->len != 0)
+		push(from, to);
+	return;
+}
+		
 void	divide(t_stack *stackA, t_stack *stackB, int *dupA, int len)
+{
+	int		result[3];
+	int		result_count[3];
+	int		index;
+
+	index = 0;
+	while(index < 3)
+	{
+		result_count[index] = (int)(len/4) * (index + 1);
+		result[index] = dupA[result_count[index]];
+		index++;
+	}
+	/*
+	for (int i = 0; i < 3; i++){
+		ft_printf("result_count[%i] = %i\t", i, result_count[i]);
+	}
+	for (int i = 0; i < 3; i++){
+		ft_printf("result[%i] = %i\t", i, result[i]);
+	}
+	ft_printf("\n"); */
+	index = 0;
+	while((int)stackA->len > 0)
+	{
+		if (stackA->head->value == result[index])
+			index++;
+		if (index >= 3)
+			break;
+		if ((stackA->head->value < result[index]))
+			push(stackA, stackB);
+		else
+			rotate(1, stackA);
+	}
+	push_all(stackA, stackB);
+}
+	/*
+	while(i < (len/4) * 3)
+	{
+		while ((stackA->head->value <= result[j]) && (len/4) * 3)
+		{
+			push(stackA, stackB);
+			i++;
+		}
+		rotate(1, stackA);
+		j++;
+	} */
+
+void	divide_old(t_stack *stackA, t_stack *stackB, int *dupA, int len)
 {
 	int		result[3];
 	int		i;
@@ -11,11 +65,12 @@ void	divide(t_stack *stackA, t_stack *stackB, int *dupA, int len)
 	result[2] = dupA[(int)((len/4) * 3)];
 	i = 0;
 	j = 0;
+	for (int i = 0; i < 3; i++){
+		ft_printf("result[%i] = %i\t", i, result[i]);
+	}
+	ft_printf("\n");
 	while(i < (len/4) * 3)
 	{
-		//printf("stackA head: %i\n",stackA->head->value);
-		//printf("q1: %i, q2 %i, q3 %i\n",result.q1,result.q2,result.q3);
-		//printf("i: %i\n", i);
 		while ((stackA->head->value <= result[j]) && (len/4) * 3)
 		{
 			push(stackA, stackB);
@@ -88,6 +143,23 @@ void	sort(int *input, size_t len)
 	push(stackB, stackA);
 	injection_sort2(stackB, stackA, 0, stackA->head->value);
 	//na kvartaly pouze pokud to je vetsi jak 16, jinak bych to nechal na polovic, lze pak otestovat na poctu instrukci
+	print_stack(stackA);
+	print_stack(stackB);
+
+	
+}
+
+void	sort_just_selective(int *input, size_t len)
+{
+	t_stack 	*stackA;
+	t_stack		*stackB;
+
+	stackA = stack_init(input, len, 'a');
+	stackB = stack_init(NULL, 0, 'b');
+	push(stackA, stackB);
+	injection_sort2(stackA, stackB, 0, stackB->head->value);
+	//na kvartaly pouze pokud to je vetsi jak 16, jinak bych to nechal na polovic, lze pak otestovat na poctu instrukci
+	push_all(stackB, stackA);
 	print_stack(stackA);
 	print_stack(stackB);
 

@@ -92,7 +92,4 @@ t_solver	*create_solver(t_stack *from, t_stack *to, int head_from, int head_to)
 	}
 	return(solver);
 }
-	
-	
-
 

@@ -2,7 +2,7 @@
 
 # Function to generate a random integer between -100 and 100
 generate_random_number() {
-  echo $((RANDOM % 200 -100))
+  echo $((RANDOM % 20001 - 10000))
 }
 
 if [ "$#" -eq 0 ]; then
@@ -19,7 +19,6 @@ done
 
 # Call the sort binary with the generated numbers as parameters
 echo "input numbers: ${random_numbers[@]}"
-~/Code/42/push_swap/sort_test "${random_numbers[@]}"
 echo "numbers of instructions: "
 ~/Code/42/push_swap/sort_test "${random_numbers[@]}" | wc -l
 echo "checker result: "
