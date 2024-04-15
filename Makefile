@@ -48,7 +48,7 @@ main_test: $(TST_INPUT) $(LIBFT)
 	$(COMPILER) $(FLAGS) -o main_test $(TST_INPUT) -Llibft/ -lft -o main_test
 
 sort_test: $(LIBFT) $(PRINTF)
-	$(COMPILER) $(FLAGS) $(TST) -Llibft/ -Llibft/  -Lftprintf -lft ft_printf/libftprintf.a -o sort_test
+	$(COMPILER) $(FLAGS) $(TST) -Llibft/ -Llibft/  -Lftprintf -lft ft_printf/libftprintf.a -o push_swap
 	#$(COMPILER) $(FLAGS) -c $(TST) -Llibft/ -lft -o mini_sort_test
 
 	

@@ -28,14 +28,12 @@ int	*int_copy_fromStack(t_stack *stack)
 	return (res);
 }
 
-void	middle_sort(t_stack *stackA, t_stack *stackB)
+void	push_or_rotate(t_stack *stackA, t_stack *stackB, int *sortedA)
 {
-	int	median;
-	int	*sortedA;
 	int	i;
 	int	index;
+	int median;
 
-	sortedA = int_copy_fromStack(stackA);
 	mergesort(sortedA, stackA->len);
 	if (stackA->len % 2 == 0)
 		index = ((int)(stackA->len) / 2);
@@ -55,6 +53,38 @@ void	middle_sort(t_stack *stackA, t_stack *stackB)
 	free(sortedA);
 }
 
+void	middle_sort(t_stack *stackA, t_stack *stackB)
+{
+	int	*sortedA;
+
+	sortedA = NULL;
+	sortedA = int_copy_fromStack(stackA);
+	push_or_rotate(stackA, stackB, sortedA);
+	if (stackA->len > 3)
+		middle_sort(stackA, stackB);
+	else if (stackA->len == 3)
+		mini_sort(stackA);	
+	else
+		swap_sort(stackA);
+}
+
+void	six_sort(t_stack *stackA, t_stack *stackB)
+{
+	if (stackA->len <= 2)
+		swap_sort(stackA);
+	else if (stackA->len == 3)
+		mini_sort(stackA);
+	else
+	{
+		while(stackA->len > 3)
+			push(stackA, stackB);
+		mini_sort(stackA);
+		injection_sort2(stackB, stackA, 0, stackA->head->value);
+	}
+}
+
+
+
 void	middleway(int *input, size_t len)
 {
 	t_stack	*stackA;
@@ -64,18 +94,13 @@ void	middleway(int *input, size_t len)
 	stackA = stack_init(input, len, 'a');
 	stackB = stack_init(NULL, 0, 'b');
 	//podminky podle delky stackAlen
-	while(stackA->len > 3)
+	if(stackA->len <= 5)
+		six_sort(stackA, stackB);
+	else
 	{
 		middle_sort(stackA, stackB);//here will be middle sort,
+		injection_sort2(stackB, stackA, 0, stackA->head->value);
 	}
-//	print_stack(stackA);
-//	print_stack(stackB);
-	if (stackA->len == 3)
-		mini_sort(stackA);	
-	else
-		swap_sort(stackA);
-//	printf("now injection_sort2:\n");
-	injection_sort2(stackB, stackA, 0, stackA->head->value);
 //	print_stack(stackA);
 //	print_stack(stackB);
 }
