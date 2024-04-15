@@ -80,14 +80,18 @@ void	swap_ops(t_stack *stack)
 
 	node1 = stack->head;
 	node2 = stack->head->next;
-	node1->prev->next = node2;
-	node2->next->prev = node1;
-	node1->next = node2->next;
-	node2->prev = node1->prev;
-	node1->prev = node2;
-	node2->next = node1;
+	if (stack->len > 2)
+	{	
+		node1->prev->next = node2;
+		node2->next->prev = node1;
+		node1->next = node2->next;
+		node2->prev = node1->prev;
+		node1->prev = node2;
+		node2->next = node1;
+	}
 	stack->head = node2;
 }
+
 
 void	swap(int numstack, ...)
 {

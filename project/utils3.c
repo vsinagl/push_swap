@@ -32,12 +32,12 @@ int* merge(int* arr, int len1, int len2)
     j = 0;
     while (j < len2 || i < len1) {
         if (len1 > i && (len2 <= j || arr1[i] <= arr2[j]))
-		{
+	{
             arr[i + j] = arr1[i];
             i++;
         } 
-		else
-		{
+	else
+	{
             arr[i + j] = arr2[j];
             j++;
         }

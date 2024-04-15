@@ -1,7 +1,11 @@
 #include "../pushswap.h"
 
-int	is_number(const char *str)
+int	is_int_number(const char *str)
 {
+	long		number;
+	const char	*str_org;
+
+	str_org = str;
 	while ((*str >= 9 && *str <= 13) || (*str == 32))
 		str++;
 	if (*str == '+' || *str == '-')
@@ -12,7 +16,28 @@ int	is_number(const char *str)
 			return (0);
 		str++;
 	}
-	return (1);
+	number = ft_atoi(str_org);
+	if (number > INT_MAX || number < INT_MIN)
+		return 0;
+	return 1;
+}
+
+int	is_duplicate(int *arr, int len, char *arg)
+{
+	int		number;
+	int		i;
+
+	number = ft_atoi(arg);
+	if (number > INT_MAX || number < INT_MIN)
+		return 0;
+	i = 0;
+	while ( i < len)
+	{
+		if (arr[i] == number)
+			return 1;
+		i++;
+	}
+	return 0;
 }
 
 int	*process_input(int argc, char *argv[])
@@ -26,12 +51,12 @@ int	*process_input(int argc, char *argv[])
 	arr = (int *)malloc(sizeof(int) *(argc - 1));
 	while (i < argc - 1)
 	{
-		if (is_number(argv[j]) == 0)
+		if (is_int_number(argv[j]) == 0  || is_duplicate(arr, i, argv[j]) == 1)
 		{
 			free(arr);
 			return (NULL);
 		}
-		arr[i] = ft_atoi(argv[j]);
+		arr[i] = (int)ft_atoi(argv[j]);
 		i++;
 		j++;
 	}
@@ -120,7 +145,7 @@ int	main(int argc, char *argv[])
 		ft_printf("Error\n");
 		return (1);
 	}
-	sort_just_selective(input, (argc - 1));
+	middleway(input, (argc - 1));
 	return(0);
 }
 

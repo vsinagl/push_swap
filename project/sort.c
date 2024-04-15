@@ -143,10 +143,8 @@ void	sort(int *input, size_t len)
 	push(stackB, stackA);
 	injection_sort2(stackB, stackA, 0, stackA->head->value);
 	//na kvartaly pouze pokud to je vetsi jak 16, jinak bych to nechal na polovic, lze pak otestovat na poctu instrukci
-	print_stack(stackA);
-	print_stack(stackB);
-
-	
+	//print_stack(stackA);
+	//print_stack(stackB);
 }
 
 void	sort_just_selective(int *input, size_t len)

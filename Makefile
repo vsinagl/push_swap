@@ -17,6 +17,7 @@ TST:=	project/ops1.c\
 		project/utils1.c\
 		project/utils2.c\
 		project/utils3.c\
+		project/middleway.c\
 		test/utils_test.c\
 
 TST_O:= $(TST:.c=.o)

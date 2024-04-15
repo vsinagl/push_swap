@@ -72,5 +72,6 @@ void		free_solver(t_solver *solver);
 int			*mergesort(int* arr, int len);
 int			*int_copy(int *arr, int len);
 void		push_all(t_stack *from, t_stack *to);
+void		middleway(int *input, size_t len);
 
 #endif
