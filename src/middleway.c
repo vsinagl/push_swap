@@ -66,6 +66,7 @@ void	middle_sort(t_stack *stackA, t_stack *stackB)
 		mini_sort(stackA);	
 	else
 		swap_sort(stackA);
+	free(sortedA);
 }
 
 void	six_sort(t_stack *stackA, t_stack *stackB)
@@ -101,8 +102,8 @@ void	middleway(int *input, size_t len)
 		middle_sort(stackA, stackB);//here will be middle sort,
 		injection_sort2(stackB, stackA, 0, stackA->head->value);
 	}
-//	print_stack(stackA);
-//	print_stack(stackB);
+	print_stack(stackA);
+	print_stack(stackB);
 }
 
 

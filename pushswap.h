@@ -12,12 +12,21 @@
 
 # define ABS(x) ((x) < 0 ? -(x) : (x))
 
-typedef struct t_solver t_solver;
-typedef struct t_node t_node;
-typedef struct t_stack t_stack;
+typedef struct s_solver t_solver;
+typedef struct s_node t_node;
+typedef struct s_stack t_stack;
+typedef struct s_chunk t_chunk;
 
-//prepsat t_solve, arraye jsou zbytecne
-typedef struct t_result
+
+enum			e_loc
+{
+	TOP_A,
+	BOT_A,
+	TOP_B,
+	BOT_B
+};
+
+typedef struct s_result
 {
 	int q1;
 	int q2;
@@ -25,27 +34,34 @@ typedef struct t_result
 	int q4;
 } t_result;
 
-typedef struct t_solver
+typedef struct s_solver
 {
 	int		*matrix[3];
 	int		matrix_len;
 	int		bi_score;
 } t_solver;
 
-typedef struct t_node
+typedef struct s_node
 {
 	int		value;
 	t_node	*next;
 	t_node	*prev;
 }	t_node;
 
-typedef struct t_stack
+typedef struct s_stack
 {
 	t_node	*head;
 	int		head_i;
 	size_t	len;
 	char	name;
 }	t_stack;
+
+typedef struct s_chunk
+{
+	enum e_loc loc;
+	int	len;
+}	t_chunk;
+	
 
 t_node		*create_node(int value, t_node *next, t_node *prev);
 t_stack		*create_stack(t_node *head, size_t len, char name);
