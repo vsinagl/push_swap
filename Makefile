@@ -18,6 +18,7 @@ TST:=	src/ops1.c\
 		src/utils2.c\
 		src/utils3.c\
 		src/middleway.c\
+		src/merge_sort.c\
 		test/utils_test.c\
 
 TST_O:= $(TST:.c=.o)

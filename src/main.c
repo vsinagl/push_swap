@@ -145,7 +145,7 @@ int	main(int argc, char *argv[])
 		ft_printf("Error\n");
 		return (1);
 	}
-	middleway(input, (argc - 1));
+	merge_sort(input, (argc - 1));
 	return(0);
 }
 

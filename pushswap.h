@@ -16,6 +16,7 @@ typedef struct s_solver t_solver;
 typedef struct s_node t_node;
 typedef struct s_stack t_stack;
 typedef struct s_chunk t_chunk;
+typedef struct s_mergestruct t_mergestruct;
 
 
 enum			e_loc
@@ -61,7 +62,8 @@ typedef struct s_chunk
 	enum e_loc loc;
 	int	len;
 }	t_chunk;
-	
+
+//typedef struct t_mergestruct defined here:	
 
 t_node		*create_node(int value, t_node *next, t_node *prev);
 t_stack		*create_stack(t_node *head, size_t len, char name);
@@ -89,5 +91,6 @@ int			*mergesort(int* arr, int len);
 int			*int_copy(int *arr, int len);
 void		push_all(t_stack *from, t_stack *to);
 void		middleway(int *input, size_t len);
+void		merge_sort(int *input, size_t len);
 
 #endif
