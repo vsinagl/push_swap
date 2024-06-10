@@ -9,25 +9,24 @@ void	swap_sort(t_stack	*stack)
 		swap(1, stack);
 	return;
 }
-int	*int_copy_fromStack(t_stack *stack)
+int	*int_copy_fromStack(t_stack *stack, int i, int len)
 {
 	int			*res;
-	size_t		i;
 
 	if (stack == NULL)
 		return(NULL);
-	res = (int *)malloc(sizeof(int) * stack->len);
+	res = (int *)malloc(sizeof(int) * len);
 	if (res == NULL)
 		return (NULL);
 	i = 0;
-	while (i < stack->len)
+	while (i < len)
 	{
 		res[i] = get_stack_value(stack, i);
 		i++;
 	}
 	return (res);
 }
-
+/*
 void	push_or_rotate(t_stack *stackA, t_stack *stackB, int *sortedA)
 {
 	int	i;
@@ -106,4 +105,4 @@ void	middleway(int *input, size_t len)
 	print_stack(stackB);
 }
 
-
+*/

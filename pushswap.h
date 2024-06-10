@@ -63,6 +63,17 @@ typedef struct s_chunk
 	int	len;
 }	t_chunk;
 
+typedef struct s_mergestruct
+{
+	int	border1;
+	int	border2;
+	t_stack *from;
+	t_stack *to;
+	t_chunk	min;
+	t_chunk	mid;
+	t_chunk	max;
+}	t_mergestruct;
+
 //typedef struct t_mergestruct defined here:	
 
 t_node		*create_node(int value, t_node *next, t_node *prev);
@@ -85,6 +96,8 @@ void		injection_sort(t_stack *from, t_stack *to);
 void		injection_sort2(t_stack *from, t_stack *to, int len, int min);
 void		sort_just_selective(int *input, size_t len);
 int			get_index(int from_head, t_stack *to, int head);
+int			*mergesort(int* arr, int len);
+int	*int_copy_fromStack(t_stack *stack, int i, int len);
 t_solver	*create_solver(t_stack *from, t_stack *to, int head_from, int head_to);
 void		free_solver(t_solver *solver);
 int			*mergesort(int* arr, int len);

@@ -48,7 +48,7 @@ int* merge(int* arr, int len1, int len2)
 int	*mergesort(int* arr, int len)
 {
     int len1;
-	int	len2;
+    int	len2;
 
     if (len == 1)
         return arr;

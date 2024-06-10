@@ -29,7 +29,7 @@ PRINTF:= ft_printf/printf.a
 
 #compiler instructions:
 COMPILER:= clang
-FLAGS:= -Wall -Wextra -Werror
+FLAGS:=
 NAME:= push_swap
 
 all: $(NAME) $(LIBFT) $(PRINTF)
