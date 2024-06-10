@@ -254,7 +254,6 @@ void	merge_sort_rec(t_chunk *ch_to_sort,t_stack *stackA, t_stack *stackB)
 	merge_sort_rec(&mergestruct.mid, stackA, stackB);
 	merge_sort_rec(&mergestruct.min, stackA, stackB);
 	printf("merge_sort_rec done\n");
-	printf(
 	return;
 }
 

@@ -5,7 +5,7 @@
 
 # include "ctype.h"
 # include "limits.h"
-# include "libft/libft.h"
+# include "libft2/libft.h"
 # include "stdlib.h"
 # include "stdarg.h"
 # include "ft_printf/ft_printf.h"
