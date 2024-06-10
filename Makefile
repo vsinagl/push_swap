@@ -24,7 +24,7 @@ TST:=	src/ops1.c\
 TST_O:= $(TST:.c=.o)
 			
 #external libraries
-LIBFT:= libft/libft.a
+LIBFT:= libft2/libft.a
 PRINTF:= ft_printf/printf.a
 
 #compiler instructions:
@@ -35,7 +35,7 @@ NAME:= push_swap
 all: $(NAME) $(LIBFT) $(PRINTF)
 
 $(NAME): $(TST_O)
-	$(COMPILER) $(FLAGS) $(TST_O) -Llibft/ -lft -Lft_printf -lftprintf -o $(NAME)
+	$(COMPILER) $(FLAGS) $(TST_O) -Llibft2/ -lft -Lft_printf -lftprintf -o $(NAME)
 
 %.o: %.c
 	$(COMPILER) $(FLAGS) -c $< -o $@
