@@ -32,7 +32,7 @@ the calls of operation are:
 - `ss`: swap both stack A and B 
 
 ## Rotating
-In rotation operation, we put the first item to the bottom or the bottom item to the top. The first mentioned is called "*rotation* (putting top item on stack to bottom). The second operation (putting the item from bottom to top) is called *reverse ration*.  
+In rotation operation, we put the first item to the bottom or bottom item to the top. The first mentioned is called "*rotation* (putting top item on stack to bottom). The second operation (putting the item from bottom to top) is called *reverse ration*.  
 We can *rotate* or *reverse rotate* the stack A or stack B  
   
 Example:  

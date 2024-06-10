@@ -18,23 +18,24 @@ TST:=	src/ops1.c\
 		src/utils2.c\
 		src/utils3.c\
 		src/middleway.c\
+		src/merge_sort.c\
 		test/utils_test.c\
 
 TST_O:= $(TST:.c=.o)
 			
 #external libraries
-LIBFT:= libft/libft.a
+LIBFT:= libft2/libft.a
 PRINTF:= ft_printf/printf.a
 
 #compiler instructions:
 COMPILER:= clang
-FLAGS:= -Wall -Wextra -Werror
+FLAGS:=
 NAME:= push_swap
 
 all: $(NAME) $(LIBFT) $(PRINTF)
 
 $(NAME): $(TST_O)
-	$(COMPILER) $(FLAGS) $(TST_O) -Llibft/ -lft -Lft_printf -lftprintf -o $(NAME)
+	$(COMPILER) $(FLAGS) $(TST_O) -Llibft2/ -lft -Lft_printf -lftprintf -o $(NAME)
 
 %.o: %.c
 	$(COMPILER) $(FLAGS) -c $< -o $@
