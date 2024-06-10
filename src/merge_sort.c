@@ -40,7 +40,26 @@ void	six_sort2(t_stack *stackA, t_stack *stackB)
 
 void	sort_last_two(t_chunk *ch_to_sort, t_stack *stackA, t_stack *stackB)
 {
-	printf("Implementation error!\n");
+	if (ch_to_sort->loc == BOT_A)
+	{
+		rev_rotate(1,stackA);
+		rev_rotate(1,stackA);
+	}
+	else if (ch_to_sort->loc == TOP_B)
+	{
+		push(stackB, stackA);
+		push(stackB, stackA);
+	}
+	//zde by to slo optimalizovat, napr pokud udelam rev_rot push rev_rot push nebo 2x_rev_rot a pak 2xpush, poradi prvku na TOP_A bude obracene. Vyhnul bych se naslednemu swapu pri stejnem poctu operaci
+	else if (ch_to_sort->loc == BOT_B)
+	{
+		rev_rotate(1, stackB);
+		rev_rotate(1, stackB);
+		push(stackB, stackA);
+		push(stackB, stackA);
+	}
+	if (get_stack_value(stackA, 0) > get_stack_value(stackA, 1))
+		swap(1, stackA);
 	return;
 }
 
@@ -209,6 +228,7 @@ void	merge_sort_rec(t_chunk *ch_to_sort,t_stack *stackA, t_stack *stackB)
 	t_mergestruct mergestruct;
 	//in merge struct there are included the pivots value that are used to determine to which chunk the value (index, node) should be moved
 	
+	printf("++++-----------++++\nEntry chunk info:\nChunk size:\t%i\nChunk loc:\t%i\n", ch_to_sort->len, ch_to_sort->loc);
 	mergestruct_init(&mergestruct);
 	if (ch_to_sort->loc == TOP_A || ch_to_sort->loc == BOT_A)
 	{
