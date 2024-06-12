@@ -303,6 +303,51 @@ void	merge_sort_rec(t_chunk *ch_to_sort,t_stack *stackA, t_stack *stackB)
 	return;
 }
 
+void	sort_five(t_stack *stackA, t_stack *stackB)
+{
+	int *arr;
+	
+	arr = int_copy_fromStack(stackA, 0, stackA->len);
+	mergesort(arr, stackA->len);
+	while (stackA->len > 3)
+	{
+	if (get_stack_value(stackA, 0) == arr[0] || get_stack_value(stackA, 0) == arr[1])
+		push(stackA, stackB);
+	else
+		rotate(1, stackA);
+	}
+	if (get_stack_value(stackB, 0) < get_stack_value(stackB, 1))
+		swap(1, stackB);
+	mini_sort(stackA);
+	push(stackB, stackA);
+	push(stackB, stackA);
+	free(arr);
+}
+
+void	sort_three(t_stack *stackA)
+{
+	if(stackA->len == 2 && (get_stack_value(stackA, 0) > get_stack_value(stackA, 1)))
+		swap(1, stackA);
+	else if(stackA->len == 3)
+		mini_sort(stackA);
+	return;
+}
+
+/*
+void	six_sort(t_stack *stackA, t_stack *stackB)
+{
+	else if (stackA->len == 3)
+		mini_sort(stackA);
+	else
+	{
+		while(stackA->len > 3)
+			push(stackA, stackB);
+		mini_sort(stackA);
+		injection_sort2(stackB, stackA, 0, stackA->head->value);
+	}
+}
+*/
+
 void	merge_sort(int *input, size_t len)
 {
 	t_stack	*stackA;
@@ -320,10 +365,13 @@ void	merge_sort(int *input, size_t len)
 		free_stack(stackB);
 		return ;
 	}
-	if(stackA->len <= 15)
-		six_sort2(stackA, stackB);
-	merge_sort_rec(&start_chunk, stackA, stackB);
+	if (stackA->len <= 3)
+		sort_three(stackA);
+	else if(stackA->len <= 12)
+		six_sort(stackA, stackB);
+	else
+		merge_sort_rec(&start_chunk, stackA, stackB);
 	//here will be code for othe
-	//print_stack(stackA);
-	//print_stack(stackB);
+	free_stack(stackA);
+	free_stack(stackB);
 }

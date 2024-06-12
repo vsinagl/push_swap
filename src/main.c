@@ -73,7 +73,7 @@ int	main(int argc, char *argv[])
 	input = process_input(argc, argv);
 	if (input == NULL)
 	{
-		ft_printf("Error\n");
+		ft_printf("Error");
 		return (1);
 	}
 	size_t len = (size_t)argc;	
@@ -142,10 +142,11 @@ int	main(int argc, char *argv[])
 	input = process_input(argc, argv);
 	if (input == NULL)
 	{
-		ft_printf("Error\n");
+		ft_printf("Error");
 		return (1);
 	}
 	merge_sort(input, (argc - 1));
+	free(input);
 	return(0);
 }
 
