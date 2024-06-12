@@ -13,9 +13,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +231 src/merge_sort.c
-badd +1 src/main.c
-badd +0 pushswap.h
+badd +114 src/merge_sort.c
+badd +100 pushswap.h
+badd +37 Makefile
+badd +17 src/middleway.c
+badd +44 tester/push_swap_test_linux.sh
 argglobal
 %argdel
 $argadd src/merge_sort.c
@@ -25,10 +27,7 @@ let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
-wincmd _ | wincmd |
-vsplit
-2wincmd h
-wincmd w
+1wincmd h
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -39,10 +38,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 94 + 141) / 282)
-exe 'vert 2resize ' . ((&columns * 43 + 141) / 282)
-exe 'vert 3resize ' . ((&columns * 143 + 141) / 282)
+exe 'vert 1resize ' . ((&columns * 82 + 83) / 166)
+exe 'vert 2resize ' . ((&columns * 83 + 83) / 166)
 argglobal
+balt pushswap.h
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -53,41 +52,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 267 - ((52 * winheight(0) + 31) / 63)
+let s:l = 115 - ((52 * winheight(0) + 31) / 63)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 267
-normal! 09|
-wincmd w
-argglobal
-if bufexists(fnamemodify("src/merge_sort.c", ":p")) | buffer src/merge_sort.c | else | edit src/merge_sort.c | endif
-if &buftype ==# 'terminal'
-  silent file src/merge_sort.c
-endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 24 - ((23 * winheight(0) + 31) / 63)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 24
+keepjumps 115
 normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("pushswap.h", ":p")) | buffer pushswap.h | else | edit pushswap.h | endif
+if bufexists(fnamemodify("src/middleway.c", ":p")) | buffer src/middleway.c | else | edit src/middleway.c | endif
 if &buftype ==# 'terminal'
-  silent file pushswap.h
+  silent file src/middleway.c
 endif
-balt src/main.c
+balt tester/push_swap_test_linux.sh
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -98,17 +75,16 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 24 - ((8 * winheight(0) + 31) / 63)
+let s:l = 25 - ((24 * winheight(0) + 31) / 63)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 24
-normal! 0
+keepjumps 25
+normal! 05|
 wincmd w
 2wincmd w
-exe 'vert 1resize ' . ((&columns * 94 + 141) / 282)
-exe 'vert 2resize ' . ((&columns * 43 + 141) / 282)
-exe 'vert 3resize ' . ((&columns * 143 + 141) / 282)
+exe 'vert 1resize ' . ((&columns * 82 + 83) / 166)
+exe 'vert 2resize ' . ((&columns * 83 + 83) / 166)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

@@ -12,19 +12,29 @@ void	swap_sort(t_stack	*stack)
 int	*int_copy_fromStack(t_stack *stack, int i, int len)
 {
 	int			*res;
+	int			j;
 
+	//printf("int_copy_fromStack >> i: %i, len: %i\n", i, len);
 	if (stack == NULL)
 		return(NULL);
 	res = (int *)malloc(sizeof(int) * len);
 	if (res == NULL)
 		return (NULL);
-	i = 0;
+	j = 0;
 	while (i < len)
 	{
-		res[i] = get_stack_value(stack, i);
+		//printf("gsv: %i\n", get_stack_value(stack, i));
+		res[j] = get_stack_value(stack, i);
 		i++;
+		j++;
 	}
-	return (res);
+	/*
+	printf("res array:[");
+	for (int i = 0; i < j; i++)
+		printf("%i, ", res[i]);
+	printf("]\n");
+	*/
+	return(res);
 }
 /*
 void	push_or_rotate(t_stack *stackA, t_stack *stackB, int *sortedA)
