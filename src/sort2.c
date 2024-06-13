@@ -26,18 +26,17 @@ void	mini_sort(t_stack *stack)
 	if (stack->len != 3)
 		return ;
 	arr = comparsion(stack);
-	if (arr[0] == 1 && arr[1] == 1)
-		return;
-	if ((arr[0] == 0 && arr[1] == 0))
+	if (arr[0] == 1 && arr[1] == 1);
+	else if ((arr[0] == 0 && arr[1] == 0))
 	{
 		rotate(1, stack);
 		swap(1, stack);
 	}
-	if (arr[0] == 0 && arr[1] == 1 && arr[2] == 1)
+	else if (arr[0] == 0 && arr[1] == 1 && arr[2] == 1)
 		rotate(1, stack);
-	if (arr[0] == 0 && arr[1] == 1 && arr[2] == 0)
+	else if (arr[0] == 0 && arr[1] == 1 && arr[2] == 0)
 		swap(1, stack);
-	if (arr[0] == 1 && arr[1] == 0)
+	else if (arr[0] == 1 && arr[1] == 0)
 	{
 		rev_rotate(1, stack);
 		if (arr[2] == 0)
@@ -105,6 +104,7 @@ void	injection_sort2(t_stack *from, t_stack *to, int len, int min)
 		}
 		push(from, to);
 		recalculate_head(to);
+		free_solver(solver);
 	}
 	movedist = rotation_distance(to->len, to->head_i, 0, len);
 	rotation_sequence(to, movedist);	

@@ -9,24 +9,35 @@ void	swap_sort(t_stack	*stack)
 		swap(1, stack);
 	return;
 }
+
 int	*int_copy_fromStack(t_stack *stack, int i, int len)
 {
 	int			*res;
+	int			j;
 
+	//printf("int_copy_fromStack >> i: %i, len: %i\n", i, len);
 	if (stack == NULL)
 		return(NULL);
 	res = (int *)malloc(sizeof(int) * len);
 	if (res == NULL)
 		return (NULL);
-	i = 0;
+	j = 0;
 	while (i < len)
 	{
-		res[i] = get_stack_value(stack, i);
+		//printf("gsv: %i\n", get_stack_value(stack, i));
+		res[j] = get_stack_value(stack, i);
 		i++;
+		j++;
 	}
-	return (res);
+	/*
+	printf("res array:[");
+	for (int i = 0; i < j; i++)
+		printf("%i, ", res[i]);
+	printf("]\n");
+	*/
+	return(res);
 }
-/*
+
 void	push_or_rotate(t_stack *stackA, t_stack *stackB, int *sortedA)
 {
 	int	i;
@@ -57,7 +68,7 @@ void	middle_sort(t_stack *stackA, t_stack *stackB)
 	int	*sortedA;
 
 	sortedA = NULL;
-	sortedA = int_copy_fromStack(stackA);
+	sortedA = int_copy_fromStack(stackA, 0, stackA->len);
 	push_or_rotate(stackA, stackB, sortedA);
 	if (stackA->len > 3)
 		middle_sort(stackA, stackB);
@@ -85,24 +96,9 @@ void	six_sort(t_stack *stackA, t_stack *stackB)
 
 
 
-void	middleway(int *input, size_t len)
+void	middleway(t_stack *stackA, t_stack *stackB)
 {
-	t_stack	*stackA;
-	t_stack *stackB;
-
-	//ft_printf("running middleway sort..\n");
-	stackA = stack_init(input, len, 'a');
-	stackB = stack_init(NULL, 0, 'b');
-	//podminky podle delky stackAlen
-	if(stackA->len <= 5)
-		six_sort(stackA, stackB);
-	else
-	{
-		middle_sort(stackA, stackB);//here will be middle sort,
-		injection_sort2(stackB, stackA, 0, stackA->head->value);
-	}
-	print_stack(stackA);
-	print_stack(stackB);
+	middle_sort(stackA, stackB);//here will be middle sort,
+	injection_sort2(stackB, stackA, 0, stackA->head->value);
 }
 
-*/

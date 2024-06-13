@@ -1,2 +1,5 @@
 *.o
 push_swap
+traces/
+tester/
+traces.txt

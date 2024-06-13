@@ -97,13 +97,15 @@ void		injection_sort2(t_stack *from, t_stack *to, int len, int min);
 void		sort_just_selective(int *input, size_t len);
 int			get_index(int from_head, t_stack *to, int head);
 int			*mergesort(int* arr, int len);
-int	*int_copy_fromStack(t_stack *stack, int i, int len);
+int			*int_copy_fromStack(t_stack *stack, int i, int len);
 t_solver	*create_solver(t_stack *from, t_stack *to, int head_from, int head_to);
 void		free_solver(t_solver *solver);
 int			*mergesort(int* arr, int len);
 int			*int_copy(int *arr, int len);
 void		push_all(t_stack *from, t_stack *to);
-void		middleway(int *input, size_t len);
+void	middleway(t_stack *stackA, t_stack *stackB);
 void		merge_sort(int *input, size_t len);
+void		swap_sort(t_stack	*stack);
+void		six_sort(t_stack *stackA, t_stack *stackB);
 
 #endif
