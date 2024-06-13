@@ -1,48 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   middleway.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/01 09:12:15 by vsinagl           #+#    #+#             */
+/*   Updated: 2024/06/13 17:17:31 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pushswap.h"
 
-//middleway_utils1.c
 void	swap_sort(t_stack	*stack)
 {
 	if (stack->len > 2 || stack->len == 1)
-		return;
+		return ;
 	if (stack->head->value > stack->head->next->value)
 		swap(1, stack);
-	return;
-}
-
-int	*int_copy_fromStack(t_stack *stack, int i, int len)
-{
-	int			*res;
-	int			j;
-
-	//printf("int_copy_fromStack >> i: %i, len: %i\n", i, len);
-	if (stack == NULL)
-		return(NULL);
-	res = (int *)malloc(sizeof(int) * len);
-	if (res == NULL)
-		return (NULL);
-	j = 0;
-	while (i < len)
-	{
-		//printf("gsv: %i\n", get_stack_value(stack, i));
-		res[j] = get_stack_value(stack, i);
-		i++;
-		j++;
-	}
-	/*
-	printf("res array:[");
-	for (int i = 0; i < j; i++)
-		printf("%i, ", res[i]);
-	printf("]\n");
-	*/
-	return(res);
+	return ;
 }
 
 void	push_or_rotate(t_stack *stackA, t_stack *stackB, int *sortedA)
 {
 	int	i;
 	int	index;
-	int median;
+	int	median;
 
 	mergesort(sortedA, stackA->len);
 	if (stackA->len % 2 == 0)
@@ -51,32 +34,33 @@ void	push_or_rotate(t_stack *stackA, t_stack *stackB, int *sortedA)
 		index = ((int)(stackA->len) / 2) + 1;
 	median = sortedA[index];
 	i = 0;
-	while(i < index)
+	while (i < index)
 	{
-		if (stackA->head->value < median) {
+		if (stackA->head->value < median)
+		{
 			i++;
 			push(stackA, stackB);
 		}
 		else
-			rotate(1,stackA);
+			rotate(1, stackA);
 	}
 	free(sortedA);
 }
 
 void	middle_sort(t_stack *stackA, t_stack *stackB)
 {
-	int	*sortedA;
+	int	*sorted_a;
 
-	sortedA = NULL;
-	sortedA = int_copy_fromStack(stackA, 0, stackA->len);
-	push_or_rotate(stackA, stackB, sortedA);
+	sorted_a = NULL;
+	sorted_a = int_copy_fromstack(stackA, 0, stackA->len);
+	push_or_rotate(stackA, stackB, sorted_a);
 	if (stackA->len > 3)
 		middle_sort(stackA, stackB);
 	else if (stackA->len == 3)
-		mini_sort(stackA);	
+		mini_sort(stackA);
 	else
 		swap_sort(stackA);
-	free(sortedA);
+	free(sorted_a);
 }
 
 void	six_sort(t_stack *stackA, t_stack *stackB)
@@ -87,18 +71,15 @@ void	six_sort(t_stack *stackA, t_stack *stackB)
 		mini_sort(stackA);
 	else
 	{
-		while(stackA->len > 3)
+		while (stackA->len > 3)
 			push(stackA, stackB);
 		mini_sort(stackA);
 		injection_sort2(stackB, stackA, 0, stackA->head->value);
 	}
 }
 
-
-
 void	middleway(t_stack *stackA, t_stack *stackB)
 {
-	middle_sort(stackA, stackB);//here will be middle sort,
+	middle_sort(stackA, stackB);
 	injection_sort2(stackB, stackA, 0, stackA->head->value);
 }
-

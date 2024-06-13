@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops1.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/01 09:12:15 by vsinagl           #+#    #+#             */
+/*   Updated: 2024/06/13 17:17:31 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pushswap.h"
 
 void	push(t_stack *from, t_stack *to)
@@ -17,7 +29,7 @@ void	push(t_stack *from, t_stack *to)
 	}
 	from->len--;
 	free(head);
-	ft_printf("p%c\n",to->name);
+	ft_printf("p%c\n", to->name);
 	node_insert(to, node);
 }
 
@@ -81,7 +93,7 @@ void	swap_ops(t_stack *stack)
 	node1 = stack->head;
 	node2 = stack->head->next;
 	if (stack->len > 2)
-	{	
+	{
 		node1->prev->next = node2;
 		node2->next->prev = node1;
 		node1->next = node2->next;
@@ -91,7 +103,6 @@ void	swap_ops(t_stack *stack)
 	}
 	stack->head = node2;
 }
-
 
 void	swap(int numstack, ...)
 {

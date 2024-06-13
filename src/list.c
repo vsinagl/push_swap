@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/01 09:12:15 by vsinagl           #+#    #+#             */
+/*   Updated: 2024/06/13 17:17:31 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pushswap.h"
 
 t_node	*create_node(int value, t_node *next, t_node *prev)
@@ -37,8 +49,8 @@ t_stack	*stack_init(int *arr, size_t len, char name)
 
 	if (arr == NULL || len == 0)
 	{
-		stack = create_stack(NULL, len, name);	
-		return(stack);	
+		stack = create_stack(NULL, len, name);
+		return (stack);
 	}
 	i = 0;
 	curr = create_node(arr[i], NULL, NULL);

@@ -12,7 +12,6 @@ TST_INPUT:= src/ops1.c\
 TST:=	src/ops1.c\
 		src/list.c\
 		src/main.c\
-		src/sort.c\
 		src/sort2.c\
 		src/utils1.c\
 		src/utils2.c\

@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/01 09:12:15 by vsinagl           #+#    #+#             */
+/*   Updated: 2024/06/13 17:17:31 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pushswap.h"
 
 int	rotation_distance(int stacklen, int head, int index, int len)
 {
 	int		rr_distance;
 	int		r_distance;
-
 
 	if (index == len && stacklen == len)
 		index = 0;
@@ -28,9 +39,9 @@ int	rotation_distance(int stacklen, int head, int index, int len)
 
 void	rotation_sequence(t_stack *to, int movedist)
 {
-	if(movedist > 0)
+	if (movedist > 0)
 	{
-		while(movedist-- > 0)
+		while (movedist-- > 0)
 		{
 			rotate(1, to);
 			to->head_i++;
@@ -38,7 +49,7 @@ void	rotation_sequence(t_stack *to, int movedist)
 	}
 	else if (movedist < 0)
 	{
-		while(movedist++ < 0)
+		while (movedist++ < 0)
 		{
 			rev_rotate(1, to);
 			to->head_i--;
@@ -71,7 +82,7 @@ void	do_rev_rotations(t_stack *to, t_stack *from, t_solver *solver)
 	{
 		if (solver->matrix[1][solver->bi_score] < 0)
 		{
-			solver->matrix[1][solver->bi_score]++; 
+			solver->matrix[1][solver->bi_score]++;
 			rev_rotate(2, to, from);
 			to->head_i--;
 		}
@@ -89,43 +100,3 @@ void	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver)
 	else if (solver->matrix[0][solver->bi_score] < 0)
 		do_rev_rotations(to, from, solver);
 }
-
-
-/*
-void	rotation_sequence_two(t_stack *to, t_stack *from, t_solver *solver)
-{
-	if (solver->matrix[0][solver->bi_score] > 0)
-	{
-		while (solver->matrix[0][solver->bi_score]-- > 0)
-		{
-			if (solver->matrix[1][solver->bi_score] > 0)
-			{
-				solver->matrix[1][solver->bi_score]--;
-				rotate(2, to, from);
-				to->head_i++;
-			}
-			else
-			{
-				rotate(1, from);
-			}
-		}
-	}
-	else if (solver->matrix[0][solver->bi_score] < 0)
-	{
-		while (solver->matrix[0][solver->bi_score]++ < 0)
-		{
-			if (solver->matrix[1][solver->bi_score] < 0)
-			{
-				solver->matrix[1][solver->bi_score]++; 
-				rev_rotate(2, to, from);
-				to->head_i--;
-			}
-			else
-			{
-				rev_rotate(1, from);
-			}
-		}
-	}
-}
-	
-*/

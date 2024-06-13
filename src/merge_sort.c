@@ -358,7 +358,6 @@ void	merge_sort(int *input, size_t len)
 	stackB = stack_init(NULL, 0, 'b');
 	start_chunk.loc = TOP_A;
 	start_chunk.len = stackA->len;
-	//podminky podle delky stackAlen
 	if (check_stack(stackA) == 1)
 	{
 		free_stack(stackA);
@@ -371,7 +370,6 @@ void	merge_sort(int *input, size_t len)
 		six_sort(stackA, stackB);
 	else
 		merge_sort_rec(&start_chunk, stackA, stackB);
-	//here will be code for othe
 	free_stack(stackA);
 	free_stack(stackB);
 }

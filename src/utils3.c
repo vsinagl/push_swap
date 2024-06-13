@@ -1,6 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils3.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/01 09:12:15 by vsinagl           #+#    #+#             */
+/*   Updated: 2024/06/13 17:17:31 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pushswap.h"
 
-#include <stdlib.h>
+int	*int_copy_fromstack(t_stack *stack, int i, int len)
+{
+	int		*res;
+	int		j;
+
+	if (stack == NULL)
+		return (NULL);
+	res = (int *)malloc(sizeof(int) * len);
+	if (res == NULL)
+		return (NULL);
+	j = 0;
+	while (i < len)
+	{
+		res[j] = get_stack_value(stack, i);
+		i++;
+		j++;
+	}
+	return (res);
+}
 
 void	copy_array(int *src, int *dest, int len)
 {
@@ -16,7 +46,8 @@ void	copy_array(int *src, int *dest, int len)
 
 void	merge(int *arr, int *arr1, int *arr2, int len1, int len2)
 {
-	int	i, j;
+	int	i;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -37,8 +68,9 @@ void	merge(int *arr, int *arr1, int *arr2, int len1, int len2)
 
 int	*mergesort(int *arr, int len)
 {
-	int	len1, len2;
-	int	arr1[1000];
+	int	len1;
+	int	len2;
+	int	arr1[1000]; //udelat dynamicky
 	int	arr2[1000];
 
 	if (len < 2)
@@ -50,7 +82,7 @@ int	*mergesort(int *arr, int len)
 	mergesort(arr1, len1);
 	mergesort(arr2, len2);
 	merge(arr, arr1, arr2, len1, len2);
-	return(arr);
+	return (arr);
 }
 
 int	*int_copy(int *arr, int len)
@@ -69,51 +101,3 @@ int	*int_copy(int *arr, int len)
 	}
 	return (res);
 }
-/*
-
-int* merge(int* arr, int len1, int len2)
-{
-    int i;
-    int	j;
-    int *arr1;
-    int *arr2;
-    
-    arr1 = int_copy(arr, len1);
-	arr2 = int_copy(arr + len1, len2);
-	if (arr1 == NULL || arr2 == NULL)
-		return(NULL);
-    i = 0;
-    j = 0;
-    while (j < len2 || i < len1) {
-        if (len1 > i && (len2 <= j || arr1[i] <= arr2[j]))
-	{
-            arr[i + j] = arr1[i];
-            i++;
-        } 
-	else
-	{
-            arr[i + j] = arr2[j];
-            j++;
-        }
-    }
-    free(arr1);
-    free(arr2);
-    return arr;
-}
-
-int	*mergesort(int* arr, int len)
-{
-    int len1;
-    int	len2;
-
-    if (len == 1)
-        return arr;
-    len1 = len / 2;
-    len2 = len - len1;
-    mergesort(arr, len1);
-    mergesort(arr + len1, len2);
-    merge(arr, len1, len2);
-    return arr;
-}
-*/
-
