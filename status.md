@@ -1,9 +1,10 @@
 # STATUS OF PROJECT 
 This file describe what are actual tasks that need to beed done, bugs and erros that need to be fix
 
-- [ ] check norminette
+- [x] check norminette
 - [ ] write a tester -> do the bonus
-- [ ] Makefile, re rule not working (nothing to be done for re). check other rules aswell. 
+- [x] Makefile, re rule not working (nothing to be done for re). check other rules aswell. 
+	- [x] Makefile -Wall -Wextra -Werror missing! this will cause some other issues aswell ! so fix it ASAP!
 
 
 ## Norminette:
@@ -19,5 +20,5 @@ functions:
 - [/] test.c --> *testovaci file, smazan*
 - [x] utils1.c
 - [x] utils2.c
-- [-] utils3.c  --**je treba lehce predelat, generovat to chatgpt**
-- [ ] merge_sort.c 
+- [x] utils3.c  --**je treba lehce predelat, generovat to chatgpt**
+- [x] merge_sort.c 

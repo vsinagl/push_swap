@@ -18,7 +18,10 @@ TST:=	src/ops1.c\
 		src/utils3.c\
 		src/middleway.c\
 		src/merge_sort.c\
-		test/utils_test.c\
+		src/merge_sort_uts.c\
+		src/split_chunks.c\
+
+#test/utils_test.c
 
 TST_O:= $(TST:.c=.o)
 			
@@ -28,8 +31,19 @@ PRINTF:= ft_printf/printf.a
 
 #compiler instructions:
 COMPILER:= clang
-FLAGS:=
+FLAGS:= -Wall -Wextra -Werror
 NAME:= push_swap
+
+#COLORS
+Black = \033[0;30m
+Red = \033[0;31m
+Green = \033[0;32m
+Yellow = \033[0;33m
+Blue = \033[0;34m
+Magenta = \033[0;35m
+Cyan = \033[0;36m
+White = \033[0;37m
+END = \033[0;39m
 
 all: $(NAME) $(LIBFT) $(PRINTF)
 
@@ -40,10 +54,10 @@ $(NAME): $(TST_O)
 	$(COMPILER) $(FLAGS) -c $< -o $@
 	
 $(LIBFT):
-	make -C libft/
+	@make -C libft/
 
 $(PRINTF):
-	make -C ft_printf/
+	@make -C ft_printf/
 
 clean: 
 	rm $(TST_O)
@@ -51,6 +65,7 @@ clean:
 fclean:
 	rm $(NAME)
 
+re: fclean clean all
 		 
 ops: ops_test
 	./ops_test

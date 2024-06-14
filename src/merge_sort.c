@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42prague.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/01 09:12:15 by vsinagl           #+#    #+#             */
+/*   Updated: 2024/06/13 17:17:31 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pushswap.h"
 
-int		check_stack(t_stack *stack)
+int	check_stack(t_stack *stack)
 {
 	size_t	i;
 
@@ -14,277 +26,32 @@ int		check_stack(t_stack *stack)
 	return (1);
 }
 
-void	swap_sort2(t_stack	*stack)
+void	what_stack_iam_pointing_to(t_chunk *ch_to_sort,
+		t_mergestruct *mergestruct, t_stack *stackA, t_stack *stackB)
 {
-	if (stack->len > 2 || stack->len == 1)
-		return;
-	if (stack->head->value > stack->head->next->value)
-		swap(1, stack);
-	return;
-}
-
-void	six_sort2(t_stack *stackA, t_stack *stackB)
-{
-	if (stackA->len <= 2)
-		swap_sort2(stackA);
-	else if (stackA->len == 3)
-		mini_sort(stackA);
-	else
-	{
-		while(stackA->len > 3)
-			push(stackA, stackB);
-		mini_sort(stackA);
-		injection_sort2(stackB, stackA, 0, stackA->head->value);
-	}
-}
-
-void	sort_last_two(t_chunk *ch_to_sort, t_stack *stackA, t_stack *stackB)
-{
-	if (ch_to_sort->loc == BOT_A)
-	{
-		rev_rotate(1,stackA);
-		rev_rotate(1,stackA);
-	}
-	else if (ch_to_sort->loc == TOP_B)
-	{
-		push(stackB, stackA);
-		push(stackB, stackA);
-	}
-	//zde by to slo optimalizovat, napr pokud udelam rev_rot push rev_rot push nebo 2x_rev_rot a pak 2xpush, poradi prvku na TOP_A bude obracene. Vyhnul bych se naslednemu swapu pri stejnem poctu operaci
-	else if (ch_to_sort->loc == BOT_B)
-	{
-		rev_rotate(1, stackB);
-		rev_rotate(1, stackB);
-		push(stackB, stackA);
-		push(stackB, stackA);
-	}
-	if (get_stack_value(stackA, 0) > get_stack_value(stackA, 1))
-		swap(1, stackA);
-	return;
-}
-
-void	sort_last_one(t_chunk *ch_to_sort, t_stack *stackA, t_stack *stackB)
-{
-	if (ch_to_sort->loc == BOT_A)
-	{
-		rev_rotate(1,stackA);
-	}
-	else if (ch_to_sort->loc == TOP_B)
-	{
-		push(stackB, stackA);
-	}
-	//zde by to slo optimalizovat, napr pokud udelam rev_rot push rev_rot push nebo 2x_rev_rot a pak 2xpush, poradi prvku na TOP_A bude obracene. Vyhnul bych se naslednemu swapu pri stejnem poctu operaci
-	else if (ch_to_sort->loc == BOT_B)
-	{
-		rev_rotate(1, stackB);
-		push(stackB, stackA);
-	}
-	return ;
-}
-
-void	chose_pivots(t_chunk *ch_to_sort, t_stack *stackA,
-		t_stack *stackB, t_mergestruct *mergestruct)
-{
-	int	*intarr;
-
-	if (ch_to_sort->loc == TOP_A)
-	{
-		//printf("chose pivots >> TOP_A\n");
-		intarr = int_copy_fromStack(stackA, 0, ch_to_sort->len);
-		mergesort(intarr, ch_to_sort->len);
-	}
-	else if (ch_to_sort->loc == TOP_B)
-	{
-		//printf("chose pivots >> TOP_B\n");
-		intarr = int_copy_fromStack(stackB, 0, ch_to_sort->len);
-		mergesort(intarr, ch_to_sort->len);
-	}
-	else if(ch_to_sort->loc == BOT_A)
-	{
-		//printf("chose pivots >> BOT_A\n");
-		intarr = int_copy_fromStack(stackA, (stackA->len - ch_to_sort->len),
-					stackA->len);
-		mergesort(intarr, ch_to_sort->len);
-	}
-	else if(ch_to_sort->loc == BOT_B)
-	{
-		//printf("chose pivots >> BOT_B\n");
-		intarr = int_copy_fromStack(stackB, (stackB->len - ch_to_sort->len),
-					stackB->len);
-		mergesort(intarr, ch_to_sort->len);
-	}
-	if (ch_to_sort->loc == TOP_A && ch_to_sort->len > 5)
-	{
-		mergestruct->border2 = intarr[(ch_to_sort->len / 2)];
-		mergestruct->border1 = intarr[((ch_to_sort->len / 4))];
-		//mergestruct->border1 = intarr[((ch_to_sort->len / 3) - 1)];
-	}
-	else if(ch_to_sort->len > 5 && ch_to_sort->loc == BOT_A)
-	{
-		mergestruct->border2 = intarr[(ch_to_sort->len / 2)];
-		mergestruct->border1 = intarr[((ch_to_sort->len / 4))];
-	}
-	else
-	{
-		mergestruct->border1 = intarr[ch_to_sort->len / 3];
-		mergestruct->border2 = intarr[2*(ch_to_sort->len / 3)];
-	}
-
-	free(intarr);
-}
-
-void	chunk_locations(t_mergestruct *mergestruct, enum e_loc loc)
-{
-	if (loc == TOP_A)
-	{
-		mergestruct->max.loc = BOT_A;
-		mergestruct->mid.loc = TOP_B;
-		mergestruct->min.loc = BOT_B;
-	}
-	else if (loc == TOP_B)
-	{
-		mergestruct->max.loc = TOP_A;
-		mergestruct->mid.loc = BOT_A;
-		mergestruct->min.loc = BOT_B;
-	}
-	else if (loc == BOT_B)
-	{
-		mergestruct->max.loc = TOP_A;
-		mergestruct->mid.loc = BOT_A;
-		mergestruct->min.loc = TOP_B;
-	}
-	else
-	{
-		mergestruct->max.loc = TOP_A;
-		mergestruct->mid.loc = TOP_B;
-		mergestruct->min.loc = BOT_B;
-	}
-}
-
-void	split_chunks(t_chunk *ch_to_sort, t_mergestruct *mergestruct)
-{
-	int	p_index;
-	int	inc;
-
-	chunk_locations(mergestruct, ch_to_sort->loc);
-	p_index = 0;
-	//printf("chunk loc: %i\tstack: %c\n", ch_to_sort->loc, mergestruct->from->name);
-	while (ch_to_sort->len > 0)
-	{
-		if (ch_to_sort->loc != TOP_A && ch_to_sort->loc != TOP_B)
-			p_index = mergestruct->from->len - 1;
-		//do condition je taky treba pridat informace o chunku max, min, mid, zejmena pridat location(napr pro prvni if hnedka dole, kdy ch_to__sort->loc== TOP_A to bude BOT_A !), potom je treba ake postupne incrementovat jeho delku podle toho kolik prvku do nej nasypu!!
-		//situace pro max
-		//printf("p_index: %i\tstackValue: %i\t",p_index, get_stack_value(mergestruct->from, p_index));
-		//situace pro min
-		if (get_stack_value(mergestruct->from, p_index) < mergestruct->border1)
-		{
-			//printf("MIN\n");
-			if (ch_to_sort->loc == TOP_A)
-			{
-				push(mergestruct->from, mergestruct->to);
-				rotate(1, mergestruct->to);
-			}
-			else if (ch_to_sort->loc == TOP_B)
-			{
-				rotate(1, mergestruct->from);
-			}
-			else if (ch_to_sort->loc == BOT_B)
-			{
-				rev_rotate(1, mergestruct->from);
-			}
-			else
-			{
-				rev_rotate(1, mergestruct->from);
-				push(mergestruct->from, mergestruct->to);
-				rotate(1, mergestruct->to);
-			}
-			mergestruct->min.len += 1;
-		}
-		//situace pro mid
-		else if (get_stack_value(mergestruct->from, p_index) < mergestruct->border2)
-		{
-			//printf("MID\n");
-			if (ch_to_sort->loc == TOP_A)
-				push(mergestruct->from, mergestruct->to);
-			else if (ch_to_sort->loc == TOP_B)
-			{
-				push(mergestruct->from, mergestruct->to);
-				rotate(1, mergestruct->to);
-			}
-			else if (ch_to_sort->loc == BOT_B)
-			{
-				rev_rotate(1, mergestruct->from);
-				push(mergestruct->from, mergestruct->to);
-				rotate(1, mergestruct->to);
-			}
-			else
-			{
-				rev_rotate(1, mergestruct->from);
-				push(mergestruct->from, mergestruct->to);
-			}
-			mergestruct->mid.len += 1;
-		}
-		//situace pro max
-		else
-		{
-			//printf("MAX\n");
-			if (ch_to_sort->loc == TOP_A)
-			{
-				rotate(1, mergestruct->from);
-			}
-			else if (ch_to_sort->loc == TOP_B)
-				push(mergestruct->from, mergestruct->to);
-			else if (ch_to_sort->loc == BOT_B)
-			{
-				rev_rotate(1, mergestruct->from);
-				push(mergestruct->from, mergestruct->to);
-			}
-			else
-				rev_rotate(1, mergestruct->from);
-			mergestruct->max.len += 1;
-		}
-		ch_to_sort->len--;
-		//p_index += inc;
-	}
-}
-
-void	mergestruct_init(t_mergestruct *mergestruct)
-{
-	mergestruct->border1 = 0;
-	mergestruct->border2 = 0;
-	mergestruct->min.len = 0;
-	mergestruct->mid.len = 0;
-	mergestruct->max.len = 0;
-}
-
-void	merge_sort_rec(t_chunk *ch_to_sort,t_stack *stackA, t_stack *stackB)
-{
-	t_mergestruct mergestruct;
-	//in merge struct there are included the pivots value that are used to determine to which chunk the value (index, node) should be moved
-	
-	/*
-	print_stack(stackA);
-	print_stack(stackB);
-*/
-
-	mergestruct_init(&mergestruct);
 	if (ch_to_sort->loc == TOP_A || ch_to_sort->loc == BOT_A)
 	{
-		mergestruct.from = stackA;
-		mergestruct.to = stackB;
+		mergestruct->from = stackA;
+		mergestruct->to = stackB;
 	}
 	else
 	{
-		mergestruct.from = stackB;
-		mergestruct.to = stackA;
+		mergestruct->from = stackB;
+		mergestruct->to = stackA;
 	}
+}
+
+//main recursive three-way merge sort function
+void	merge_sort_rec(t_chunk *ch_to_sort, t_stack *stackA, t_stack *stackB)
+{
+	t_mergestruct	mergestruct;
+
+	mergestruct_init(&mergestruct);
+	what_stack_iam_pointing_to(ch_to_sort, &mergestruct, stackA, stackB);
 	if (ch_to_sort->loc == BOT_A && ch_to_sort->len == (int)stackA->len)
 		ch_to_sort->loc = TOP_A;
 	else if (ch_to_sort->loc == BOT_B && ch_to_sort->len == (int)stackB->len)
 		ch_to_sort->loc = TOP_B;
-	//printf("++++-----------++++\nEntry chunk info:\nChunk size:\t%i\nChunk loc:\t%i\n", ch_to_sort->len, ch_to_sort->loc);
-	//base case !!
 	if (ch_to_sort->len <= 2)
 	{
 		if (ch_to_sort->len == 2)
@@ -294,82 +61,45 @@ void	merge_sort_rec(t_chunk *ch_to_sort,t_stack *stackA, t_stack *stackB)
 		return ;
 	}
 	chose_pivots(ch_to_sort, stackA, stackB, &mergestruct);
-	//printf("pivot1: %i, pivot2: %i\n", mergestruct.border1, mergestruct.border2);
 	split_chunks(ch_to_sort, &mergestruct);
 	merge_sort_rec(&mergestruct.max, stackA, stackB);
 	merge_sort_rec(&mergestruct.mid, stackA, stackB);
 	merge_sort_rec(&mergestruct.min, stackA, stackB);
-	//printf("++++-----------++++\n\n");
-	return;
-}
-
-void	sort_five(t_stack *stackA, t_stack *stackB)
-{
-	int *arr;
-	
-	arr = int_copy_fromStack(stackA, 0, stackA->len);
-	mergesort(arr, stackA->len);
-	while (stackA->len > 3)
-	{
-	if (get_stack_value(stackA, 0) == arr[0] || get_stack_value(stackA, 0) == arr[1])
-		push(stackA, stackB);
-	else
-		rotate(1, stackA);
-	}
-	if (get_stack_value(stackB, 0) < get_stack_value(stackB, 1))
-		swap(1, stackB);
-	mini_sort(stackA);
-	push(stackB, stackA);
-	push(stackB, stackA);
-	free(arr);
+	return ;
 }
 
 void	sort_three(t_stack *stackA)
 {
-	if(stackA->len == 2 && (get_stack_value(stackA, 0) > get_stack_value(stackA, 1)))
+	if (stackA->len == 2 && (
+			get_stack_value(stackA, 0) > get_stack_value(stackA, 1)))
 		swap(1, stackA);
-	else if(stackA->len == 3)
-		mini_sort(stackA);
-	return;
-}
-
-/*
-void	six_sort(t_stack *stackA, t_stack *stackB)
-{
 	else if (stackA->len == 3)
 		mini_sort(stackA);
-	else
-	{
-		while(stackA->len > 3)
-			push(stackA, stackB);
-		mini_sort(stackA);
-		injection_sort2(stackB, stackA, 0, stackA->head->value);
-	}
+	return ;
 }
-*/
 
 void	merge_sort(int *input, size_t len)
 {
-	t_stack	*stackA;
-	t_stack *stackB;
+	t_stack	*stacka;
+	t_stack	*stackb;
 	t_chunk	start_chunk;
 
-	stackA = stack_init(input, len, 'a');
-	stackB = stack_init(NULL, 0, 'b');
+	stacka = stack_init(input, len, 'a');
+	stackb = stack_init(NULL, 0, 'b');
 	start_chunk.loc = TOP_A;
-	start_chunk.len = stackA->len;
-	if (check_stack(stackA) == 1)
+	start_chunk.len = stacka->len;
+	if (check_stack(stacka) == 1)
 	{
-		free_stack(stackA);
-		free_stack(stackB);
+		free_stack(stacka);
+		free_stack(stackb);
 		return ;
 	}
-	if (stackA->len <= 3)
-		sort_three(stackA);
-	else if(stackA->len <= 12)
-		six_sort(stackA, stackB);
+	if (stacka->len <= 3)
+		sort_three(stacka);
+	else if (stacka->len <= 12)
+		six_sort(stacka, stackb);
 	else
-		merge_sort_rec(&start_chunk, stackA, stackB);
-	free_stack(stackA);
-	free_stack(stackB);
+		merge_sort_rec(&start_chunk, stacka, stackb);
+	free_stack(stacka);
+	free_stack(stackb);
 }

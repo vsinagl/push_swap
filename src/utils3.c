@@ -44,23 +44,23 @@ void	copy_array(int *src, int *dest, int len)
 	}
 }
 
-void	merge(int *arr, int *arr1, int *arr2, int len1, int len2)
+void	merge(int *arr, t_array *arr1, t_array *arr2)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while (j < len2 || i < len1)
+	while (j < arr2->len || i < arr1->len)
 	{
-		if (len1 > i && (len2 <= j || arr1[i] <= arr2[j]))
+		if (arr1->len > i && (arr2->len <= j || arr1->arr[i] <= arr2->arr[j]))
 		{
-			arr[i + j] = arr1[i];
+			arr[i + j] = arr1->arr[i];
 			i++;
 		}
 		else
 		{
-			arr[i + j] = arr2[j];
+			arr[i + j] = arr2->arr[j];
 			j++;
 		}
 	}
@@ -68,20 +68,22 @@ void	merge(int *arr, int *arr1, int *arr2, int len1, int len2)
 
 int	*mergesort(int *arr, int len)
 {
-	int	len1;
-	int	len2;
-	int	arr1[1000]; //udelat dynamicky
-	int	arr2[1000];
+	t_array	arr1;
+	t_array	arr2;
 
 	if (len < 2)
 		return (arr);
-	len1 = len / 2;
-	len2 = len - len1;
-	copy_array(arr, arr1, len1);
-	copy_array(arr + len1, arr2, len2);
-	mergesort(arr1, len1);
-	mergesort(arr2, len2);
-	merge(arr, arr1, arr2, len1, len2);
+	arr1.len = len / 2;
+	arr2.len = len - arr1.len;
+	arr1.arr = (int *)malloc(sizeof(int) * arr1.len);
+	arr2.arr = (int *)malloc(sizeof(int) * arr2.len);
+	copy_array(arr, arr1.arr, arr1.len);
+	copy_array(arr + arr1.len, arr2.arr, arr2.len);
+	mergesort(arr1.arr, arr1.len);
+	mergesort(arr2.arr, arr2.len);
+	merge(arr, &arr1, &arr2);
+	free(arr1.arr);
+	free(arr2.arr);
 	return (arr);
 }
 
