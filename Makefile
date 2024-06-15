@@ -19,8 +19,23 @@ TST:=	src/ops1.c\
 		src/middleway.c\
 		src/merge_sort.c\
 		src/merge_sort_uts.c\
-		src/split_chunks.c\
+		src/split_chunks.c
 
+BONUS_S:=	src/ops1.c\
+		src/list.c\
+		src/sort2.c\
+		src/utils1.c\
+		src/utils2.c\
+		src/utils3.c\
+		src/middleway.c\
+		src/merge_sort.c\
+		src/merge_sort_uts.c\
+		src/split_chunks.c\
+		src/bonus/checker.c\
+		src/bonus/get_next_line_bonus.c\
+		src/bonus/get_next_line_utils_bonus.c
+
+BONUS_O:= $(BONUS_S:.c=.o)
 #test/utils_test.c
 
 TST_O:= $(TST:.c=.o)
@@ -33,6 +48,7 @@ PRINTF:= ft_printf/printf.a
 COMPILER:= clang
 FLAGS:= -Wall -Wextra -Werror
 NAME:= push_swap
+BONUS:= checker_vsinagl
 
 #COLORS
 Black = \033[0;30m
@@ -50,6 +66,10 @@ all: $(NAME) $(LIBFT) $(PRINTF)
 $(NAME): $(TST_O)
 	$(COMPILER) $(FLAGS) $(TST_O) -Llibft2/ -lft -Lft_printf -lftprintf -o $(NAME)
 
+$(BONUS): $(BONUS_O)
+	$(COMPILER) $(FLAGS) $(BONUS_O) -Llibft2/ -lft -Lft_printf -lftprintf -o $(BONUS)
+
+
 %.o: %.c
 	$(COMPILER) $(FLAGS) -c $< -o $@
 	
@@ -58,6 +78,11 @@ $(LIBFT):
 
 $(PRINTF):
 	@make -C ft_printf/
+
+
+
+bonus: $(BONUS)
+
 
 clean: 
 	rm $(TST_O)

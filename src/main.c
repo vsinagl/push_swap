@@ -52,16 +52,16 @@ int	is_duplicate(int *arr, int len, char *arg)
 	return (0);
 }
 
-int	*process_input(int argc, char *argv[])
+int	*process_input(int argc, char *argv[], int option)
 {
 	int		*arr;
 	int		i;
 	int		j;
 
 	i = 0;
-	j = 1;
+	j = 1 - option;
 	arr = (int *)malloc(sizeof(int) *(argc - 1));
-	while (i < argc - 1)
+	while (argv[j] != NULL)
 	{
 		if (is_int_number(argv[j]) == 0 || is_duplicate(arr, i, argv[j]) == 1)
 		{
@@ -79,9 +79,19 @@ int	main(int argc, char *argv[])
 {
 	int	*input;
 
+	input = NULL;
 	if (argc <= 1)
 		return (1);
-	input = process_input(argc, argv);
+	else if (argc == 2)
+	{
+		argv = ft_split(argv[1], ' ' );
+		argc = 1;
+		while (argv[argc - 1] != NULL)
+			argc++;
+		input = process_input(argc, argv, 1);
+	}
+	else if (argc > 2)
+		input = process_input(argc, argv, 0);
 	if (input == NULL)
 	{
 		ft_printf("Error");
