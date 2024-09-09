@@ -1,19 +1,28 @@
+
 Pushswap project by vsinagl marked by fellow peers as an outstanding project. 
-Mark: 125% ✅
-Bonus included
+
+- Mark: 125% ✅
+- Bonus included
 
 # 🥅 Goal of push swap
+
 The push swap project is about sorting numbers using two stacks and defined operations with lowest numbers of operations as possible.
 
 The program at begining recieve the content of the first stack (A). The goal is to sort numbers (lowest to highest) in first stack (A) by using the defined operations and second stack.
 
 ## Output:
+
 = list of instructions written in stdout !
+
+
 ![Example of push_swap result:](./img/output_example.png)
 
 
-## Visualization of Algorhitm
+## Visualization of Algorithm
+
 * visualization was made by using visualizer program made by Emmanuel Ruaud and some other contributors, so all credist to them 🖖!* 
+
+
 ![Push swap visualization](./img/push_swap_cut.gif)
 
 # Operations
