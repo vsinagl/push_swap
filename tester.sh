@@ -1,30 +1,30 @@
 #!/bin/bash
 
 # Loop through different numbers of inputs
-printf "Input\tAvg\tMin\tMax\n"
+printf "Input\tAvg\tMin\tMax of instructions\n"
 rm -f performance_results.csv
 for n in {10..600..10}; do
-    # Run the program multiple times and capture the output
+    # Runing executable multiple times and recording the outputs
     instructions=()
-    for ((i = 0; i < 15; i++)); do  # Adjust the number of repetitions as needed
+    for ((i = 0; i < 15; i++)); do   
         output=$(./push_swap $(shuf -i 1-$n -n $n) | wc -l)
         instructions+=($output)
     done
 
-    # Calculate statistics
+    # Calculating some basics statistics
     avg=$(echo "${instructions[@]}" | awk '{s=0; for(i=1;i<=NF;i++)s+=$i; print s/NF}')
     min=$(echo "${instructions[@]}" | tr ' ' '\n' | sort -n | head -n1)
     max=$(echo "${instructions[@]}" | tr ' ' '\n' | sort -n | tail -n1)
 
-    # Output results
+    # Result output
 	printf "$n\t$avg\t$min\t$max\n"
     echo "$n,$avg,$min,$max" >> performance_results.csv
 done
 
-# Run python script to generate image
+# running analysis.py for creating graphical view of analysis
 python3 analysis.py
 
-# Run tests on a specific number of inputs
+# Tests on specific imput 
 run_tests() {
     local num=$1
     local total=0
@@ -32,7 +32,7 @@ run_tests() {
     local max=0
     local times=100
 
-    # Run multiple tests
+    # Running multiple tests
     for ((i = 0; i < $times; i++)); do
         output=$(./push_swap $(shuf -i 1-$num -n $num) | wc -l)
         total=$((total + output))
@@ -44,10 +44,10 @@ run_tests() {
         fi
     done
 
-    # Calculate average
+    # Calculating average
     average=$((total / $times))
 
-    # Echo results
+    # Printing results
     echo ""
     echo "Number of Inputs: $num"
     echo "Number of tests: $times"
@@ -56,6 +56,5 @@ run_tests() {
     echo "Maximum Instructions: $max"
 }
 
-# Run tests for evaluation
 run_tests 100
 run_tests 500

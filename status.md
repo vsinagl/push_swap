@@ -2,7 +2,7 @@
 This file describe what are actual tasks that need to beed done, bugs and erros that need to be fix
 
 - [x] check norminette
-- [ ] write a tester -> do the bonus
+- [x] write a tester -> do the bonus
 - [x] Makefile, re rule not working (nothing to be done for re). check other rules aswell. 
 	- [x] Makefile -Wall -Wextra -Werror missing! this will cause some other issues aswell ! so fix it ASAP!
 

@@ -14,10 +14,10 @@ with open('performance_results.csv', 'r') as file:
         mins.append(float(row[2]))
         maxs.append(float(row[3]))
 
-# Set the figure size
+# Setting the size of figure
 plt.figure(figsize=(16, 12))  # 16 inches width, 12 inches height
 
-# Plot the data
+# Ploting the data
 plt.plot(numbers, avgs, label='Average')
 plt.plot(numbers, mins, label='Minimum')
 plt.plot(numbers, maxs, label='Maximum')
