@@ -4,3 +4,5 @@ traces/
 tester/
 traces.txt
 *.vim
+*.vscode
+*.visualizer
